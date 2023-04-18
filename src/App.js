@@ -1,13 +1,13 @@
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import TicTacToeNav from './Layout/Nav/NavBar';
-import Home from './Pages/Home';
+import UserComponent from './Users/UserComponent';
 
 function App() {
   return (
     <div className="App">
       <TicTacToeNav />
-      <Home />
+      <UserComponent />
     </div>
   );
 }
