@@ -32,14 +32,15 @@ const GameBoard = () => {
     for (const condition of winningConditions) {
       const [a, b, c] = condition;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        setWinner(board[a]);
-        return;
+        return board[a];
       }
     }
     if (!board.includes(null)) {
-      setWinner("Draw");
+      return "Draw";
     }
+    return null;
   };
+  
 
   const resetBoard = () => {
     setBoard(emptyBoard);
