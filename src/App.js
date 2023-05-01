@@ -1,33 +1,28 @@
-import React, { useState } from "react";
+// This file is for rendering react components. 
+// Uses react router to apply page routes.
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import TicTacToeNav from "./Layout/Nav/NavBar";
-import GameBoard from "./GameBoard";
+import GameBoard from "./Pages/GameBoard";
 import UserComponent from "./Users/UserComponent";
-import LoginForm from "./Auth/LoginForm";
-import RegistrationForm from "./Auth/RegistrationForm";
+import Home from './Pages/Home.js'
+
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const handleAuthentication = (authStatus) => {
-    setIsAuthenticated(authStatus);
-  };
-
   return (
+    <>
     <div className="App">
       <TicTacToeNav />
       <div className="container mt-5">
-        <GameBoard />
-        {!isAuthenticated && (
-          <div className="auth-container">
-            <LoginForm onAuthenticate={handleAuthentication} />
-            <RegistrationForm />
-          </div>
-        )}
-        {isAuthenticated && <UserComponent />}
+        <Routes>
+          <Route path="/game" element={<GameBoard />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<UserComponent />} />
+        </Routes>
       </div>
     </div>
+    </>
   );
 }
 
