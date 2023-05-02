@@ -24,8 +24,11 @@ const GameBoard = () => {
     const newBoard = [...board];
     newBoard[index] = player;
     setBoard(newBoard);
-    checkWinner(newBoard);
     setPlayer(player === "X" ? "O" : "X");
+    const result = checkWinner(newBoard);
+    if (result) {
+      setWinner(result);
+    }
   };
 
   const checkWinner = (board) => {
@@ -40,7 +43,6 @@ const GameBoard = () => {
     }
     return null;
   };
-  
 
   const resetBoard = () => {
     setBoard(emptyBoard);
@@ -95,64 +97,63 @@ const GameBoard = () => {
           const newBoard = [...board];
           newBoard[i] = "O";
           const score = minimax(newBoard, 0, false);
-            if (score > bestScore) {
-              bestScore = score;
-              bestMove = i;
-            }
+          if (score > bestScore) {
+            bestScore = score;
+            bestMove = i;
           }
         }
-  
-        if (bestMove !== null) {
-          handleClick(bestMove);
-        }
       }
-    }, [board, playVsAI, winner, player]);
-  
-    useEffect(() => {
-      makeAiMove();
-    }, [makeAiMove, player]);
-  
-    return (
-      <div className="game-board">
-        <div className="status">
-          {winner ? (
-            winner === "Draw" ? (
-              <h2>It's a draw!</h2>
-            ) : (
-              <h2>Player {winner} wins!</h2>
-            )
+
+      if (bestMove !== null) {
+        handleClick(bestMove);
+      }
+    }
+  }, [board, playVsAI, winner, player]);
+
+  useEffect(() => {
+    makeAiMove();
+  }, [makeAiMove, player]);
+
+  return (
+    <div className="game-board">
+      <div className="status">
+        {winner ? (
+          winner === "Draw" ? (
+            <h2>It's a draw!</h2>
           ) : (
-            <h2>Player {player}'s turn</h2>
-          )}
-        </div>
-        <div className="board">
-          {board.map((cell, index) => (
-            <div
-              key={index}
-              className="cell"
-              onClick={() => handleClick(index)}
-            >
-              {cell}
-            </div>
-          ))}
-        </div>
-        <div className="options">
-          <button className="reset-button" onClick={resetBoard}>
-            Reset
-          </button>
-          <div className="game-mode">
-            <label htmlFor="aiMode">Play vs AI:</label>
-            <input
-              type="checkbox"
-              id="aiMode"
-              checked={playVsAI}
-              onChange={(e) => setPlayVsAI(e.target.checked)}
-            />
+            <h2>Player {winner} wins!</h2>
+          )
+        ) : (
+          <h2>Player {player}'s turn</h2>
+        )}
+      </div>
+      <div className="board">
+        {board.map((cell, index) => (
+          <div
+            key={index}
+            className="cell"
+            onClick={() => handleClick(index)}
+          >
+            {cell}
           </div>
+        ))}
+      </div>
+      <div className="options">
+        <button className="reset-button" onClick={resetBoard}>
+          Reset
+        </button>
+        <div className="game-mode">
+          <label htmlFor="aiMode">Play vs AI:</label>
+          <input
+            type="checkbox"
+            id="aiMode"
+            checked={playVsAI}
+            onChange={(e) => setPlayVsAI(e.target.checked)}
+          />
         </div>
       </div>
-    );
-  };
-  
-  export default GameBoard;
-  
+    </div>
+  );
+};
+
+export default GameBoard;

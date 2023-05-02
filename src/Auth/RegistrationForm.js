@@ -13,7 +13,7 @@ const RegistrationForm = () => {
     event.preventDefault();
 
     try {
-      await axios.post(`${API_HOST}/api/auth/register`, { username, email, password });
+      await axios.post(`${API_HOST}/user`, { username, email, password });
       // Redirect to login page or show a success message
     } catch (error) {
       setError('Registration failed. Please try again.');
