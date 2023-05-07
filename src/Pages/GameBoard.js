@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import gameService from "../Api/GameService";
 import "./GameBoard.css";
 
 const GameBoard = () => {
@@ -27,6 +28,7 @@ const GameBoard = () => {
     setPlayer(player === "X" ? "O" : "X");
     const result = checkWinner(newBoard);
     if (result) {
+      gameService.newGame(result)
       setWinner(result);
     }
   };
