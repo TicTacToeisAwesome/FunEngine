@@ -119,9 +119,6 @@ const GameBoard = () => {
 
   return (
     <div className="game-board">
-      <div className="leaderboard">
-
-      </div>
       <div className="status">
         {winner ? (
           winner === "Draw" ? (
