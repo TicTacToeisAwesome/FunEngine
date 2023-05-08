@@ -5,23 +5,25 @@ const saveGame = `${API_HOST}/game`
 const getGameHistory = `${API_HOST}/games`
 
 class GameService {
-    getGames() {
+    getGameWinners() {
         let winners = []
-        axios.get(getGameHistory)
-        .then(res => res.data.forEach(response => {
-            winners.push(response.winner)
+        return axios.get(getGameHistory)
+        .then(res => res.data)
+        .then(arr => arr.forEach(element => {
+            winners.push(element.winner)
         }))
-        .then(() => {return winners})
+        .then(() => winners)
         .catch(error => console.log(error))
     }
 
-    newGame(winner) {
+    async newGame(winner) {
+        const gameHistory = await this.getGameWinners()
         return axios({
             method: "post",
             url: saveGame,
             data: {
                 winner: winner,
-                gameHistory: this.getGames() || [""]        
+                gameHistory: gameHistory || [""]        
             }
         })
     }

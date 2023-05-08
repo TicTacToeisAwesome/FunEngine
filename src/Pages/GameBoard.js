@@ -20,6 +20,7 @@ const GameBoard = () => {
     [2, 4, 6],
   ];
 
+
   const handleClick = (index) => {
     if (board[index] || winner) return;
     const newBoard = [...board];
@@ -118,6 +119,9 @@ const GameBoard = () => {
 
   return (
     <div className="game-board">
+      <div className="leaderboard">
+
+      </div>
       <div className="status">
         {winner ? (
           winner === "Draw" ? (
